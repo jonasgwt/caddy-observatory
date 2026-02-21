@@ -269,7 +269,9 @@ function applyTheme(theme) {
   document.documentElement.dataset.theme = resolvedTheme;
 
   themeButtons.forEach((button) => {
-    button.classList.toggle('active', button.dataset.theme === resolvedTheme);
+    const isActive = button.dataset.theme === resolvedTheme;
+    button.classList.toggle('active', isActive);
+    button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
   });
 }
 

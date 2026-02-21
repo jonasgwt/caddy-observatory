@@ -35,6 +35,7 @@
   --backdrop-green: rgba(18, 124, 91, 0.16);
   --backdrop-amber: rgba(185, 109, 0, 0.18);
   --backdrop-red: rgba(188, 43, 58, 0.12);
+  --theme-toggle-inactive: #415560;
 }
 
 [data-theme="dark"] {
@@ -74,6 +75,7 @@
   --backdrop-green: rgba(73, 211, 159, 0.16);
   --backdrop-amber: rgba(232, 182, 86, 0.16);
   --backdrop-red: rgba(255, 117, 130, 0.13);
+  --theme-toggle-inactive: #b8cdd8;
 }
 
 * {
@@ -298,14 +300,23 @@ body {
   border-radius: 999px;
   padding: 8px 14px;
   background: transparent;
-  color: var(--text-main);
+  color: var(--theme-toggle-inactive);
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
+}
+
+.theme-button:hover:not(.active) {
+  color: var(--text-main);
 }
 
 .theme-button.active {
   background: var(--active-surface);
   color: var(--active-text);
+}
+
+/* Keep the "Dark" option legible in light mode when inactive. */
+:root .theme-button[data-theme="dark"]:not(.active) {
+  color: #111111;
 }
 
 .refresh-select-wrap {
@@ -396,21 +407,30 @@ body {
 }
 
 .card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
   gap: 10px;
+}
+
+.card-header > div {
+  min-width: 0;
 }
 
 .service-name {
   margin: 0;
   font-size: 1.2rem;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .service-host {
   margin: 5px 0 0;
   font-size: 0.85rem;
   color: var(--text-muted);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .status-pill {
@@ -425,6 +445,8 @@ body {
   letter-spacing: 0.07em;
   text-transform: uppercase;
   color: #ffffff;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .status-pill.status-up {
@@ -497,6 +519,8 @@ body {
   margin: 0;
   color: var(--inline-error-text);
   font-size: 0.82rem;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .empty-state {
@@ -551,6 +575,11 @@ body {
 
   .summary-grid {
     grid-template-columns: 1fr;
+  }
+
+  .status-pill {
+    min-width: 78px;
+    padding: 6px 9px;
   }
 }
 

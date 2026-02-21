@@ -2,6 +2,10 @@
 
 Status-first local dashboard for services declared in a Caddyfile.
 
+## Product Preview
+
+![Dashboard preview](assets/dashboard-preview.png)
+
 ## Problem
 
 When you run many local services behind Caddy, failures are hard to reason about quickly:
