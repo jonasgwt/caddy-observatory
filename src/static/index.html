@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Local Service Status</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="backdrop"></div>
+    <main class="shell">
+      <header class="hero">
+        <p class="eyebrow">Caddy Service Monitor</p>
+        <h1>Local Service Status Board</h1>
+        <p class="subtext" id="discovery-text">Loading service discovery metadata...</p>
+      </header>
+
+      <section class="host-metrics-panel" id="host-metrics-panel" aria-live="polite">
+        <article class="host-metric-card">
+          <p class="host-metric-label">CPU</p>
+          <strong id="host-cpu-usage">--</strong>
+          <p class="host-metric-subtext" id="host-cpu-load">Load: --</p>
+          <div class="meter" role="presentation">
+            <span class="meter-fill cpu" id="host-cpu-bar"></span>
+          </div>
+        </article>
+
+        <article class="host-metric-card">
+          <p class="host-metric-label">Memory</p>
+          <strong id="host-memory-usage">--</strong>
+          <p class="host-metric-subtext" id="host-memory-breakdown">Used: -- / --</p>
+          <div class="meter" role="presentation">
+            <span class="meter-fill memory" id="host-memory-bar"></span>
+          </div>
+        </article>
+
+        <article class="host-metric-card">
+          <p class="host-metric-label">Network</p>
+          <strong id="host-network-rx">RX --/s</strong>
+          <p class="host-metric-subtext" id="host-network-tx">TX --/s</p>
+          <p class="host-metric-subtext dim" id="host-network-totals">Total: --</p>
+        </article>
+
+        <article class="host-metric-card">
+          <p class="host-metric-label">Uptime</p>
+          <strong id="host-uptime">--</strong>
+          <p class="host-metric-subtext" id="host-metrics-sampled">Sampled: --</p>
+          <p class="host-metric-subtext warning hidden" id="host-metrics-warning"></p>
+        </article>
+      </section>
+
+      <section class="summary-grid" id="summary-grid">
+        <article class="summary-card">
+          <span class="label">Total</span>
+          <strong id="summary-total">0</strong>
+        </article>
+        <article class="summary-card up">
+          <span class="label">Up</span>
+          <strong id="summary-up">0</strong>
+        </article>
+        <article class="summary-card degraded">
+          <span class="label">Degraded</span>
+          <strong id="summary-degraded">0</strong>
+        </article>
+        <article class="summary-card down">
+          <span class="label">Down</span>
+          <strong id="summary-down">0</strong>
+        </article>
+      </section>
+
+      <section class="toolbar">
+        <div class="filter-group" role="group" aria-label="Service filter">
+          <button class="filter-button active" data-filter="all">All Services</button>
+          <button class="filter-button" data-filter="unhealthy">Unhealthy Only</button>
+        </div>
+        <div class="refresh-controls" role="group" aria-label="Refresh controls">
+          <label class="refresh-select-wrap" for="refresh-interval">
+            <span>Every</span>
+            <select id="refresh-interval" class="refresh-select">
+              <option value="5000">5s</option>
+              <option value="10000">10s</option>
+              <option value="30000">30s</option>
+              <option value="60000">1m</option>
+              <option value="300000">5m</option>
+            </select>
+          </label>
+          <button id="toggle-refresh" class="refresh-button" type="button">Pause</button>
+          <button id="refresh-now" class="refresh-button secondary" type="button">Refresh now</button>
+        </div>
+        <div class="theme-controls" role="group" aria-label="Theme mode">
+          <button class="theme-button active" data-theme="light" type="button">Light</button>
+          <button class="theme-button" data-theme="dark" type="button">Dark</button>
+        </div>
+        <div class="refresh-meta">
+          <span id="last-refresh">Last refresh: --</span>
+          <span id="refresh-timer">Auto-refresh: every 5s</span>
+        </div>
+      </section>
+
+      <section id="error-banner" class="error-banner hidden" aria-live="polite"></section>
+
+      <section id="services-grid" class="services-grid" aria-live="polite"></section>
+    </main>
+
+    <template id="service-card-template">
+      <article class="service-card">
+        <div class="card-header">
+          <div>
+            <h2 class="service-name"></h2>
+            <p class="service-host"></p>
+          </div>
+          <span class="status-pill"></span>
+        </div>
+
+        <dl class="status-details">
+          <div>
+            <dt>Route status</dt>
+            <dd class="route-status"></dd>
+          </div>
+          <div>
+            <dt>Backend status</dt>
+            <dd class="backend-status"></dd>
+          </div>
+          <div>
+            <dt>Latency</dt>
+            <dd class="latency-status"></dd>
+          </div>
+          <div>
+            <dt>Last checked</dt>
+            <dd class="checked-at"></dd>
+          </div>
+          <div>
+            <dt>Upstream</dt>
+            <dd class="upstream"></dd>
+          </div>
+          <div>
+            <dt>Consecutive failures</dt>
+            <dd class="failures"></dd>
+          </div>
+        </dl>
+
+        <div class="card-footer">
+          <a class="open-link" target="_blank" rel="noreferrer">Open route</a>
+          <p class="error-text hidden"></p>
+        </div>
+      </article>
+    </template>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

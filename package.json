@@ -1,0 +1,20 @@
+{
+  "name": "caddy-service-status-dashboard",
+  "version": "0.1.0",
+  "description": "Status-first dashboard for local services declared in a Caddyfile",
+  "type": "module",
+  "keywords": [
+    "caddy",
+    "dashboard",
+    "service-health",
+    "local-dev",
+    "status-page"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node ./src/server.ts",
+    "test": "node --test ./tests/*.test.ts"
+  }
+}

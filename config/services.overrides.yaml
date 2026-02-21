@@ -1,0 +1,10 @@
+services:
+  # portal.localhost:
+  #   displayName: Portal UI
+  #   backendKind: http
+  #   healthPath: /actuator/health
+  #   expectedStatusCodes: [200]
+
+  # redis.localhost:
+  #   displayName: Redis Cache
+  #   backendKind: tcp
